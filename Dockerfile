@@ -17,6 +17,7 @@ COPY . .
 
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --no-scripts \
     && rm -f bootstrap/cache/packages.php bootstrap/cache/services.php \
+    && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
