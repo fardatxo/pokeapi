@@ -16,7 +16,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . .
 
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --no-scripts \
-    && composer dump-autoload --optimize \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
