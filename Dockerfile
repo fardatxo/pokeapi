@@ -16,11 +16,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . .
 
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --no-scripts \
+    && rm -f bootstrap/cache/packages.php bootstrap/cache/services.php \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
 
-CMD php artisan config:clear && \
-    php artisan package:discover --ansi && \
+CMD php artisan package:discover --ansi && \
+    php artisan config:clear && \
     php artisan migrate --force && \
     php -S 0.0.0.0:${PORT:-8000} -t public
